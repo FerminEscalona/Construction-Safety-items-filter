@@ -1,0 +1,9 @@
+kagglehub
+pandas
+numpy
+matplotlib
+pillow
+tqdm
+opencv-python
+jupyter
+ipykernel
