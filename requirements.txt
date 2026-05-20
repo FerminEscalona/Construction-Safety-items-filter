@@ -1,9 +1,23 @@
+# Entorno objetivo: macOS arm64 (Apple Silicon) con Python 3.11
+
+# Deep learning
+tensorflow-macos==2.15.0
+tensorflow-metal==1.1.0
+scipy
+scikit-learn
+
+# Dataset y procesamiento
 kagglehub
-pandas
 numpy
-matplotlib
+pandas
 pillow
-tqdm
+pyyaml
 opencv-python
+
+# Visualizacion y utilidades
+matplotlib
+tqdm
+
+# Jupyter
 jupyter
 ipykernel
