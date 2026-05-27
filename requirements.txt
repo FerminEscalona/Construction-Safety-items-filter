@@ -2,7 +2,7 @@
 # En Windows, TensorFlow corre en CPU de forma nativa.
 # En macOS arm64 se mantiene el backend Metal usado originalmente por el notebook.
 
-# Deep learning
+# Aprendizaje profundo
 tensorflow==2.15.0; platform_system != "Darwin" or platform_machine != "arm64"
 tensorflow-macos==2.15.0; platform_system == "Darwin" and platform_machine == "arm64"
 tensorflow-metal==1.1.0; platform_system == "Darwin" and platform_machine == "arm64"
@@ -11,7 +11,7 @@ scikit-learn
 ultralytics
 pytest
 
-# Dataset y procesamiento
+# Datos y procesamiento
 kagglehub
 numpy
 pandas
@@ -19,7 +19,7 @@ pillow
 pyyaml
 opencv-python
 
-# Visualizacion y utilidades
+# Visualización y utilidades
 matplotlib
 tqdm
 

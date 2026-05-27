@@ -4,7 +4,7 @@ Ultralytics/
 __pycache__/
 .ipynb_checkpoints/
 
-# Local datasets, model outputs, and experiment artifacts
+# Datasets locales, salidas del modelo y artefactos de experimentos
 data/
 models/
 runs/

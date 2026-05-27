@@ -1,10 +1,10 @@
-# Model sharing and Colab setup
+# Guía para compartir el modelo y ejecutar en Colab
 
-This project uses Google Colab for YOLO training and demo inference. Model weights are not committed to the repository. Share them through Google Drive so every team member can run the notebook without retraining.
+Este proyecto usa Google Colab para entrenar YOLO y ejecutar la demo interactiva. Los pesos del modelo no deben subirse al repositorio. La forma recomendada de compartirlos con el equipo es mediante Google Drive.
 
-## Recommended Drive folder
+## Carpeta recomendada en Drive
 
-Create and share this folder in Google Drive:
+Crea y comparte esta carpeta en Google Drive:
 
 ```text
 construction-safety-ppe/
@@ -24,29 +24,37 @@ construction-safety-ppe/
   predictions/
 ```
 
-Only `best.pt` is required to run inference and the Gradio demo. The other files are useful for reporting, validation, and review.
+Para ejecutar inferencia y la demo de Gradio solo es obligatorio compartir:
 
-## How teammates should connect the shared folder
+```text
+yolo_runs/ppe_yolov8s_recall_focus/weights/best.pt
+```
 
-1. Open the shared `construction-safety-ppe` folder in Google Drive.
-2. Add it as a shortcut to `My Drive`.
-3. Open `ppe_object_detection_yolo.ipynb` in Google Colab.
-4. Use a GPU runtime.
-5. Keep this setting in the first notebook cell:
+Los demás archivos son útiles para revisar resultados, métricas, curvas y artefactos visuales.
+
+## Cómo conectar la carpeta compartida
+
+Cada integrante del equipo debe:
+
+1. Abrir la carpeta compartida `construction-safety-ppe` en Google Drive.
+2. Agregarla como acceso directo a `Mi unidad`.
+3. Abrir `ppe_object_detection_yolo.ipynb` en Google Colab.
+4. Seleccionar un entorno de ejecución con GPU.
+5. Mantener esta configuración en la primera celda del notebook:
 
 ```python
 USE_GOOGLE_DRIVE = True
 ```
 
-The notebook expects the improved model at:
+El notebook espera encontrar el modelo mejorado en:
 
 ```text
 /content/drive/MyDrive/construction-safety-ppe/yolo_runs/ppe_yolov8s_recall_focus/weights/best.pt
 ```
 
-## Verification cell
+## Celda de verificación
 
-Run this in Colab after mounting Drive:
+Ejecuta esto en Colab después de montar Drive:
 
 ```python
 from pathlib import Path
@@ -56,17 +64,17 @@ model_path = Path(
     "yolo_runs/ppe_yolov8s_recall_focus/weights/best.pt"
 )
 
-print("Model exists:", model_path.exists())
-print("Model path:", model_path)
+print("Existe el modelo:", model_path.exists())
+print("Ruta del modelo:", model_path)
 ```
 
-If it prints `True`, the notebook can run evaluation, inference, and the Gradio demo without retraining.
+Si imprime `True`, el notebook puede ejecutar evaluación, inferencia y la demo de Gradio sin reentrenar.
 
-## What the notebook downloads automatically
+## Qué descarga automáticamente el notebook
 
-The notebook downloads the image dataset with `kagglehub`, so teammates do not need to manually share the dataset.
+El notebook descarga el dataset con `kagglehub`, así que no es necesario compartir manualmente las imágenes.
 
-The notebook installs the minimum Colab dependencies:
+También instala las dependencias mínimas de Colab:
 
 ```text
 ultralytics
@@ -75,33 +83,34 @@ pyyaml
 gradio
 ```
 
-## What not to share
+## Qué no se debe compartir ni subir al repositorio
 
-Do not share or commit:
+No compartas ni confirmes en Git:
 
 - `.venv/`
-- local cache folders
-- temporary Colab runtime folders outside Drive
-- large unneeded training artifacts
-- private datasets or credentials
+- carpetas de caché locales
+- carpetas temporales de Colab fuera de Drive
+- artefactos grandes que no sean necesarios
+- datasets privados
+- credenciales o tokens
 
-## Troubleshooting
+## Solución de problemas
 
-If `best.pt` is not found:
+Si `best.pt` no aparece:
 
-- Confirm the shared folder was added as a shortcut to `My Drive`.
-- Confirm the folder name is exactly `construction-safety-ppe`.
-- Confirm the file is under `yolo_runs/ppe_yolov8s_recall_focus/weights/best.pt`.
-- Re-run the first notebook cell to mount Google Drive.
+- Confirma que la carpeta compartida fue agregada como acceso directo a `Mi unidad`.
+- Confirma que el nombre sea exactamente `construction-safety-ppe`.
+- Confirma que el archivo esté en `yolo_runs/ppe_yolov8s_recall_focus/weights/best.pt`.
+- Ejecuta de nuevo la primera celda del notebook para montar Google Drive.
 
-If the Gradio demo starts but predictions look empty:
+Si la demo de Gradio abre, pero no muestra detecciones:
 
-- Lower the confidence threshold to `0.15`.
-- Confirm the selected model is `ppe_yolov8s_recall_focus/weights/best.pt`.
-- Try one of the included test examples before using a new image.
+- Baja el umbral de confianza a `0.15`.
+- Confirma que el modelo seleccionado sea `ppe_yolov8s_recall_focus/weights/best.pt`.
+- Prueba primero con uno de los ejemplos incluidos en el notebook.
 
-If the notebook loses variables such as `OUTPUT_BASE`:
+Si el notebook pierde variables como `OUTPUT_BASE`:
 
-- Re-run the environment setup cell.
-- Re-run the dataset preparation cell.
-- Then run the evaluation, inference, or demo cells again.
+- Ejecuta de nuevo la celda de configuración del entorno.
+- Ejecuta de nuevo la celda de preparación del dataset.
+- Luego ejecuta evaluación, inferencia o demo otra vez.
