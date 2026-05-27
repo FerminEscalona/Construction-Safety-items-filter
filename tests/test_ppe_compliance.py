@@ -26,7 +26,7 @@ def test_ignores_low_confidence_detections():
 
     report = generate_ppe_compliance_report(detections, min_confidence=0.25)
 
-    assert report.status == "sin_violaciones_detectadas"
+    assert report.status == "requiere_revision"
     assert report.violation_count == 0
     assert report.persons[0].violations == ()
 
@@ -42,3 +42,17 @@ def test_keeps_unassigned_violations_for_manual_review():
     assert report.status == "inseguro"
     assert report.violation_count == 1
     assert report.unassigned_violations == ("NO-Mask",)
+
+
+def test_marks_basic_ppe_compliance_when_required_items_are_detected():
+    detections = [
+        Detection("Person", 0.95, (0, 0, 100, 200)),
+        Detection("Hardhat", 0.80, (30, 10, 60, 40)),
+        Detection("Safety Vest", 0.76, (20, 80, 80, 150)),
+    ]
+
+    report = generate_ppe_compliance_report(detections)
+
+    assert report.status == "cumple_epp_basico"
+    assert report.violation_count == 0
+    assert report.persons[0].status == "cumple_epp_basico"

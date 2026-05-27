@@ -41,6 +41,7 @@ def generate_ppe_compliance_report(
     *,
     person_class: str = "Person",
     ppe_classes: tuple[str, ...] = ("Hardhat", "Mask", "Safety Vest"),
+    required_ppe_classes: tuple[str, ...] = ("Hardhat", "Safety Vest"),
     violation_classes: tuple[str, ...] = tuple(VIOLATION_TO_REQUIRED_PPE),
     min_confidence: float = 0.25,
 ) -> ComplianceReport:
@@ -78,13 +79,20 @@ def generate_ppe_compliance_report(
             ):
                 assigned_violation_ids.add(violation_id)
 
+        if person_violations:
+            person_status = "inseguro"
+        elif all(required_ppe in person_ppe for required_ppe in required_ppe_classes):
+            person_status = "cumple_epp_basico"
+        else:
+            person_status = "requiere_revision"
+
         person_reports.append(
             PersonCompliance(
                 person_index=person_index,
                 person_box_xyxy=person.box_xyxy,
                 detected_ppe=person_ppe,
                 violations=person_violations,
-                status="inseguro" if person_violations else "requiere_revision",
+                status=person_status,
             )
         )
 
@@ -99,7 +107,14 @@ def generate_ppe_compliance_report(
     violation_count = sum(len(person.violations) for person in person_reports) + len(
         unassigned_violations
     )
-    status = "inseguro" if violation_count else "sin_violaciones_detectadas"
+    if violation_count:
+        status = "inseguro"
+    elif person_reports and all(
+        person.status == "cumple_epp_basico" for person in person_reports
+    ):
+        status = "cumple_epp_basico"
+    else:
+        status = "requiere_revision" if person_reports else "sin_personas_detectadas"
 
     return ComplianceReport(
         status=status,
