@@ -1,45 +1,51 @@
-# Repository Guidelines
+# Guía del repositorio
 
-## Project Structure & Module Organization
+## Estructura del proyecto y organización de módulos
 
-This repository currently contains project documentation for a PPE detection initiative in construction safety. The main project overview is in `README.md`; repository-wide text normalization is configured in `.gitattributes`.
+Este repositorio contiene la documentación y los notebooks de un proyecto de detección de EPP en seguridad para construcción. La descripción principal está en `README.md`; la normalización de texto del repositorio está configurada en `.gitattributes`.
 
-When implementation is added, keep the layout predictable:
+Mantén una estructura predecible:
 
-- `src/` for application code, model pipelines, and reusable modules.
-- `tests/` for automated tests that mirror `src/` module names.
-- `data/` for small sample metadata only; do not commit large datasets.
-- `assets/` or `docs/` for diagrams, sample images, and supporting documentation.
-- `models/` for model configuration or lightweight metadata, not large trained weights.
+- `src/` para código de aplicación, lógica reutilizable y pipelines del modelo.
+- `tests/` para pruebas automatizadas que reflejen los módulos de `src/`.
+- `data/` solo para metadatos pequeños de muestra; no comprometas datasets grandes.
+- `assets/` o `docs/` para diagramas, imágenes de muestra y documentación de apoyo.
+- `models/` para configuración del modelo o metadatos livianos, no para pesos entrenados grandes.
 
-## Build, Test, and Development Commands
+## Comandos de configuración, pruebas y desarrollo
 
-No build system, package manager, or test runner is configured yet. Until one is added, validate documentation changes manually and check repository status before submitting:
+El entorno local usa Python y notebooks. Antes de entregar cambios, revisa el estado del repositorio:
 
 ```sh
 git status --short
 ```
 
-When code is introduced, document the exact setup and workflow commands in `README.md`, for example `python -m pytest`, `npm test`, or `make build`.
+Para validar la lógica reutilizable, ejecuta:
 
-## Coding Style & Naming Conventions
+```sh
+python -m pytest
+```
 
-Use clear, domain-specific names related to construction safety and PPE detection, such as `helmet_detector`, `vest_compliance`, or `ppe_violation_report`. Prefer small modules with single responsibilities.
+Cuando agregues nuevos flujos, documenta en `README.md` los comandos exactos de instalación, ejecución y validación.
 
-For Markdown, use sentence-case headings, concise paragraphs, and hyphen bullets. Keep lines readable and avoid committing generated files unless they are required project artifacts. The repository uses LF normalization through `.gitattributes`.
+## Estilo de código y convenciones de nombres
 
-## Testing Guidelines
+Usa nombres claros y específicos del dominio de seguridad en construcción y detección de EPP, como `helmet_detector`, `vest_compliance` o `ppe_violation_report`. Prefiere módulos pequeños con una sola responsabilidad.
 
-There are no tests yet. Add tests with the first implementation change. Place them under `tests/` and name them after the behavior or module being verified, such as `test_ppe_labels.py` or `test_detection_pipeline.py`.
+Para Markdown, usa títulos en español, párrafos concisos y listas con guiones. Mantén las líneas legibles y evita comprometer archivos generados salvo que sean artefactos necesarios del proyecto. El repositorio usa normalización LF mediante `.gitattributes`.
 
-For computer vision work, include tests for data parsing, label mapping, confidence thresholds, and edge cases such as missing PPE classes or empty detections. Avoid tests that require large local datasets unless fixtures are small and committed intentionally.
+## Lineamientos de pruebas
 
-## Commit & Pull Request Guidelines
+Las pruebas deben vivir en `tests/` y nombrarse según el comportamiento o módulo verificado, por ejemplo `test_ppe_labels.py` o `test_detection_pipeline.py`.
 
-Existing commits use short, imperative messages, for example `Add README with project overview and objectives`. Continue that style: start with a verb, keep the subject concise, and describe one logical change per commit.
+Para visión por computador, incluye pruebas de parseo de datos, mapeo de etiquetas, umbrales de confianza y casos límite como clases de EPP faltantes o detecciones vacías. Evita pruebas que requieran datasets locales grandes, salvo que uses fixtures pequeños comprometidos de forma intencional.
 
-Pull requests should include a brief summary, the reason for the change, validation performed, and any dataset/model assumptions. For visual or model-behavior changes, include representative examples, metrics, or screenshots where practical.
+## Lineamientos de commits y pull requests
 
-## Security & Configuration Tips
+Los commits existentes usan mensajes cortos e imperativos, por ejemplo `Add README with project overview and objectives`. Mantén ese estilo: empieza con un verbo, conserva el asunto conciso y describe un cambio lógico por commit.
 
-Do not commit credentials, private image datasets, trained model binaries, or environment-specific paths. Use ignored local configuration files for secrets and document required variables in the README when they are introduced.
+Los pull requests deben incluir un resumen breve, la razón del cambio, la validación realizada y cualquier supuesto sobre datos o modelo. Para cambios visuales o de comportamiento del modelo, incluye ejemplos representativos, métricas o capturas cuando sea práctico.
+
+## Seguridad y configuración
+
+No comprometas credenciales, datasets privados de imágenes, binarios de modelos entrenados ni rutas específicas del entorno local. Usa archivos de configuración locales ignorados para secretos y documenta las variables requeridas en `README.md` cuando aparezcan.

@@ -1,1 +1,16 @@
-.venv
+.venv/
+.ultralytics/
+Ultralytics/
+__pycache__/
+.ipynb_checkpoints/
+
+# Datasets locales, salidas del modelo y artefactos de experimentos
+data/
+models/
+runs/
+outputs/
+checkpoints/
+*.h5
+*.keras
+*.ckpt
+*.weights.h5
