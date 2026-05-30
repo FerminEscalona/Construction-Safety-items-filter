@@ -3,10 +3,7 @@
   "terminal.integrated.env.windows": {
     "YOLO_CONFIG_DIR": "${workspaceFolder}\\.ultralytics"
   },
-  "jupyter.kernels.filter": [
-    {
-      "path": ".venv\\Scripts\\python.exe",
-      "type": "pythonEnvironment"
-    }
+  "jupyter.kernels.excludePythonEnvironments": [
+    ".venv\\Scripts\\python.exe"
   ]
 }
